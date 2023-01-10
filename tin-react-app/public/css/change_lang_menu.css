@@ -1,0 +1,15 @@
+.loginPage{
+  position: relative;
+  left: 10%;
+  top: 20%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width : 70%;
+  /* -1/2 height */
+  }
+
+#login{
+    padding-bottom: 30px;
+    padding-top: 30px;
+    width : 70%;
+}
