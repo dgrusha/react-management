@@ -5,7 +5,7 @@ import MainPage from "./components/other/main";
 import Footer from "./components/fragments/footer";
 
 import Emp from "./components/emp/emp";
-import EmpDesc from "./components/emp/emp_desc";
+import {EmpDesc} from "./components/emp/emp_desc";
 import EmpForm from "./components/emp/emp_form";
 
 import Dept from "./components/dept/dept";
@@ -30,7 +30,7 @@ function App() {
               <Route path="/" element={<MainPage/>} />
               <Route path="emp">
                   <Route index={true} element={<Emp />} />
-                  <Route path="details/:empId" element={<EmpDesc />} />
+                  <Route path="/emp/details/:empId" element={<EmpDesc />} />
                   <Route path="add/" element={<EmpForm />} />
                   <Route path="edit/:empId" element={<EmpForm />} />
               </Route>

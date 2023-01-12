@@ -2,34 +2,52 @@ import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import {getEmployeeByIdApiCall} from "../../apiCalls/empApiCalls";
 import {getEmployeesApiCall} from "../../apiCalls/empApiCalls";
+import { useState, useEffect } from 'react';
 
-function EmpDesc() {
-    let { empId } = useParams()
-    empId = parseInt(empId)
-    const emp = getEmployeeByIdApiCall(empId)
+export const EmpDesc = ()  => {
+    let { empId } = useParams();
+    let [emp, setEmp] = useState(null)
+
+    useEffect(() => {
+        const dataFetch = async () => {
+            const data = await (
+                await fetch(
+                    'http://localhost:3000/api/emps/'+empId
+                )
+            ).json();
+
+            setEmp(data);
+        };
+
+        dataFetch();
+    }, [empId]);
+
+    if (!emp) return 'loading';
+
     return (
+        <>
         <main>
             <h2>EMP DESC</h2>
             <table className="table-list desc-table">
                 <tbody>
                 <tr>
                     <td title="Name:">
-                        {emp.name}
+                        {emp.fname}
                     </td>
                 </tr>
                 <tr>
                     <td title="SurName:">
-                        {emp.surname}
+                        {emp.lname}
                     </td>
                 </tr>
                 <tr>
                     <td title="Email:">
-                        Email@em.em
+                        {emp.email}
                     </td>
                 </tr>
                 <tr>
                     <td title="Date of birth:">
-                        11.22.2002
+                        {emp.date_of_birth}
                     </td>
                 </tr>
 
@@ -37,12 +55,12 @@ function EmpDesc() {
 
             </table>
 
-            <a className="btn" href="./emp.html">
+            <Link className="btn" to={`/emp/`}>
                 Cancel
-            </a>
-            <a className="btn" href="./emp_form_edit.html">
+            </Link>
+            <Link className="btn" to={`/emp/edit/${emp._id}`}>
                 Edit
-            </a>
+            </Link>
 
             <table className="table-list many-table">
                 <thead>
@@ -53,39 +71,19 @@ function EmpDesc() {
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td title="date_s">
-                        20.02.2022
-                    </td>
-                    <td title="date_e">
-                        20.02.2023
-                    </td>
-                    <td title="dept">
-                        A
-                    </td>
-                </tr>
-                <tr>
-                    <td title="date_s">
-                        20.02.2011
-                    </td>
-                    <td title="date_e">
-                        20.02.2012
-                    </td>
-                    <td title="dept">
-                        B
-                    </td>
-                </tr>
-                <tr>
-                    <td title="date_s">
-                        20.02.2011
-                    </td>
-                    <td title="date_e">
-                        20.02.2012
-                    </td>
-                    <td title="dept">
-                        C
-                    </td>
-                </tr>
+                {emp.deptEmps.map(deptEmp => (
+                    <tr>
+                        <td title="date_s">
+                            {deptEmp.start_contract}
+                        </td>
+                        <td title="date_e">
+                            {deptEmp.start_contract}
+                        </td>
+                        <td title="dept">
+                            {deptEmp.name}
+                        </td>
+                    </tr>
+                ))}
 
                 </tbody>
 
@@ -93,7 +91,7 @@ function EmpDesc() {
 
 
         </main>
+        </>
     );
 }
 
-export default EmpDesc;

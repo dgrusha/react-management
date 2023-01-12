@@ -1,9 +1,14 @@
-import { employeeList, employeeDetailsList } from './empMockData'
+import {employeeDetailsList} from './empMockData'
+
+const empBaseUrl = 'http://localhost:3000/api/emps'
 
 export function getEmployeesApiCall() {
-    return employeeList;
+    return fetch(empBaseUrl);
 }
 
 export function getEmployeeByIdApiCall(empId) {
-    return employeeDetailsList.find(emp => emp._id === empId);
+    const url = empBaseUrl + '/' + empId.toString()
+    console.log(321111111111);
+    console.log(url);
+    return fetch(url);
 }
