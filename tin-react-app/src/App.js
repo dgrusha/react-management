@@ -20,7 +20,9 @@ import DeptEmp from "./components/dept-emp/deptEmp";
 import DeptEmpDesc from "./components/dept-emp/deptEmp_desc";
 import DeptEmpForm from "./components/dept-emp/deptEmp_form";
 
-import {Routes, Route } from 'react-router-dom';
+
+import {Link, Routes, Route, useNavigate} from 'react-router-dom';
+
 
 function App() {
   return (
