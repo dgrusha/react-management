@@ -114,7 +114,7 @@ function EmpForm() {
                 <h2>NO DATA FOR SUCH AN EMPLOYEE</h2>
             </main>)
     }
-    
+
 
     return (
         <main>

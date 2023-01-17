@@ -1,12 +1,27 @@
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
-import {getEmployeeByIdApiCall} from "../../apiCalls/empApiCalls";
-import {getEmployeesApiCall} from "../../apiCalls/empApiCalls";
+import { useState, useEffect } from 'react';
 
 function DeptDesc() {
-    let { empId } = useParams()
-    empId = parseInt(empId)
-    const emp = getEmployeeByIdApiCall(empId)
+    let { deptId } = useParams();
+    let [dept, setDept] = useState(null)
+
+    useEffect(() => {
+        const dataFetch = async () => {
+            const data = await (
+                await fetch(
+                    'http://localhost:3000/api/depts/'+deptId
+                )
+            ).json();
+
+            setDept(data);
+        };
+
+        dataFetch();
+    }, [deptId]);
+
+    if (!dept) return 'loading';
+
     return (
         <main>
             <h2>DEPT DESC</h2>
@@ -14,17 +29,17 @@ function DeptDesc() {
                 <tbody>
                 <tr>
                     <td title="Name:">
-                        J
+                        {dept.name}
                     </td>
                 </tr>
                 <tr>
                     <td title="Adress:">
-                        J
+                        {dept.adress}
                     </td>
                 </tr>
                 <tr>
                     <td title="Email:">
-                        Email@em.em
+                        {dept.email}
                     </td>
                 </tr>
 
@@ -32,12 +47,12 @@ function DeptDesc() {
 
             </table>
 
-            <a className="btn" href="./dept.html">
+            <Link className="btn" to={`/dept/`}>
                 Cancel
-            </a>
-            <a className="btn" href="./dept_form_edit.html">
+            </Link>
+            <Link className="btn" to={`/dept/edit/${dept.name}`}>
                 Edit
-            </a>
+            </Link>
 
         </main>
     );

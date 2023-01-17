@@ -38,9 +38,9 @@ function App() {
               </Route>
               <Route path="dept">
                   <Route index={true} element={<Dept />} />
-                  <Route path="details/:empId" element={<DeptDesc />} />
+                  <Route path="details/:deptId" element={<DeptDesc />} />
                   <Route path="add/" element={<DeptForm />} />
-                  <Route path="edit/:empId" element={<DeptForm />} />
+                  <Route path="edit/:deptId" element={<DeptForm />} />
               </Route>
               <Route path="agency">
                   <Route index={true} element={<Agency />} />
