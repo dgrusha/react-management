@@ -1,99 +1,90 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { Link, useParams } from 'react-router-dom'
 import {getEmployeeByIdApiCall} from "../../apiCalls/empApiCalls";
 import {getEmployeesApiCall} from "../../apiCalls/empApiCalls";
 
 function DeptEmpDesc() {
-    let { empId } = useParams()
-    empId = parseInt(empId)
-    const emp = getEmployeeByIdApiCall(empId)
-    return (
+    let { deId1, deId2 } = useParams();
+    let [deptEmp, setDeptEmp] = useState(null)
+
+    useEffect(() => {
+        const dataFetch = async () => {
+            const data = await (
+                await fetch(
+                    'http://localhost:3000/api/deptEmps/'+deId1 + "/" + deId2
+                )
+            ).json();
+
+            setDeptEmp(data);
+        };
+
+        dataFetch();
+        console.log(deptEmp);
+    }, [deId1, deId2]);
+
+    if (!deptEmp) return 'loading';
+    let main = <>
         <main>
             <h2>DEPT-EMP DETAILS</h2>
-            <table className="table-list desc-table">
-                <tbody>
-                <tr>
-                    <td title="Name:">
-                        J
-                    </td>
-                </tr>
-                <tr>
-                    <td title="SurName:">
-                        J
-                    </td>
-                </tr>
-                <tr>
-                    <td title="Email:">
-                        Email@em.em
-                    </td>
-                </tr>
-                <tr>
-                    <td title="Date start:">
-                        11.22.2002
-                    </td>
-                </tr>
-                <tr>
-                    <td title="Date end:">
-                        11.22.2002
-                    </td>
-                </tr>
-                <tr>
-                    <td title="Name Dept:">
-                        DEPT1
-                    </td>
-                </tr>
-
-                </tbody>
-
-            </table>
-            <a className="btn" href="./dept-emp-edit.html">
-                Edit
-            </a>
-            <a className="btn" href="./dept-emp.html">
-                Cancel
-            </a>
-            <br/>
+            {deptEmp.map(item => (
                 <table className="table-list desc-table">
                     <tbody>
                     <tr>
                         <td title="Name:">
-                            J
+                            {item.emps.fname}
                         </td>
                     </tr>
                     <tr>
-                        <td title="SurName:">
-                            J
+                        <td title="Surname:">
+                            {item.emps.lname}
                         </td>
                     </tr>
                     <tr>
                         <td title="Email:">
-                            Email@em.em
+                            {item.emps.email}
                         </td>
                     </tr>
                     <tr>
                         <td title="Date start:">
-                            11.22.2022
+                            {item.start_contract.substring(0, 10)}
                         </td>
                     </tr>
                     <tr>
                         <td title="Date end:">
-                            11.22.2089
+                            {item.end_contract ?
+                                (
+                                    item.end_contract.substring(0, 10)
+                                ) :
+                                <p>Brak</p>
+                            }
+
                         </td>
                     </tr>
                     <tr>
                         <td title="Name Dept:">
-                            DEPT1
+                            {item.name}
                         </td>
+                    </tr>
+                    <tr>
+                        <Link className="btn" to={`/dept/edit/${item._id}`}>
+                            Edit
+                        </Link>
                     </tr>
 
                     </tbody>
 
                 </table>
-                <a className="btn" href="./dept-emp-edit.html">
-                    Edit
-                </a>
+
+
+                )
+            )}
+
+            <Link className="btn" to={`/deptEmp/`}>
+                Cancel
+            </Link>
         </main>
-    );
+    </>;
+    return main;
 }
 
 export default DeptEmpDesc;

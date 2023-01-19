@@ -50,9 +50,9 @@ function App() {
               </Route>
               <Route path="deptEmp">
                   <Route index={true} element={<DeptEmp />} />
-                  <Route path="details/:empId" element={<DeptEmpDesc />} />
+                  <Route path="details/:deId1/:deId2" element={<DeptEmpDesc />} />
                   <Route path="add/" element={<DeptEmpForm />} />
-                  <Route path="edit/:empId" element={<DeptEmpForm />} />
+                  <Route path="edit/:deId1" element={<DeptEmpForm />} />
               </Route>
           </Routes>
           <Footer />
