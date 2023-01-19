@@ -147,13 +147,13 @@ function DeptForm() {
 
                 <div className="group-bl">
                     <label htmlFor="name">Name *:</label>
-                    {dept?
+                    {page_name === 'EDIT' ?
                         (
                             <input onChange={handleChange} className="inputs" type="text" name="name" id="name" value={dept.name} disabled>
 
                             </input>
                         ) :
-                        <input onChange={handleChange} className="inputs" type="text" name="name" id="name" disabled>
+                        <input onChange={handleChange} className="inputs" type="text" name="name" id="name">
 
                         </input>
                     }

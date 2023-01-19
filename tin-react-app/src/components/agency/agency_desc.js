@@ -1,12 +1,29 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { Link, useParams } from 'react-router-dom'
 import {getEmployeeByIdApiCall} from "../../apiCalls/empApiCalls";
 import {getEmployeesApiCall} from "../../apiCalls/empApiCalls";
 
 function AgencyDesc() {
-    let { empId } = useParams()
-    empId = parseInt(empId)
-    const emp = getEmployeeByIdApiCall(empId)
+    let { spec_id } = useParams()
+    spec_id = parseInt(spec_id)
+    let [agency, setAgency] = useState(null)
+
+    useEffect(() => {
+        const dataFetch = async () => {
+            const data = await (
+                await fetch(
+                    'http://localhost:3000/api/agencys/'+spec_id
+                )
+            ).json();
+
+            setAgency(data);
+        };
+
+        dataFetch();
+    }, [spec_id]);
+
+    if (!agency) return 'loading';
+
     return (
         <main>
             <h2>AGENCY</h2>
@@ -14,22 +31,22 @@ function AgencyDesc() {
                 <tbody>
                 <tr>
                     <td title="Phone:">
-                        J
+                        {agency.phone}
                     </td>
                 </tr>
                 <tr>
                     <td title="TaxNumber:">
-                        321432524
+                        {agency.tax_number}
                     </td>
                 </tr>
                 <tr>
                     <td title="specialization:">
-                        dsadsadasdas
+                        {agency.specialization}
                     </td>
                 </tr>
                 <tr>
-                    <td title="Email:">
-                        Email@em.em
+                    <td title="Date created:">
+                        {agency.date_of_creation}
                     </td>
                 </tr>
 
@@ -37,7 +54,7 @@ function AgencyDesc() {
 
             </table>
             <br/>
-                <h3>DEPARTMENTS (ONE TO MANY)</h3>
+                <h3>DEPARTMENTS</h3>
                 <div className="tablesdivel">
                     <table className="table-list table-dept">
                         <thead>
@@ -48,49 +65,30 @@ function AgencyDesc() {
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td title="Name:">
-                                dsada
-                            </td>
-                            <td title="Adress:">
-                                Jdsadsa
-                            </td>
-                            <td title="Email:">
-                                Email@em.em
-                            </td>
-                        </tr>
-                        <tr>
-                            <td title="Name:">
-                                fghfd
-                            </td>
-                            <td title="Adress:">
-                                gfbdfggfd
-                            </td>
-                            <td title="Email:">
-                                Emai2l@em.em
-                            </td>
-                        </tr>
-                        <tr>
-                            <td title="Name:">
-                                fghewqfd
-                            </td>
-                            <td title="Adress:">
-                                gfbewqdfggfd
-                            </td>
-                            <td title="Email:">
-                                Emai23l@em.em
-                            </td>
-                        </tr>
+                        {agency.depts.map(dept => (
+                            <tr>
+                                <td title="Name:">
+                                    {dept.name}
+                                </td>
+                                <td title="Adress:">
+                                    {dept.adress}
+                                </td>
+                                <td title="Email:">
+                                    {dept.email}
+                                </td>
+                            </tr>
+                        ))}
+
 
                         </tbody>
                     </table>
                 </div>
-                <a className="btn" href="./agency.html">
-                    Cancel
-                </a>
-                <a className="btn" href="./agency_form_edit.html">
-                    Edit
-                </a>
+            <Link className="btn" to={`/agency/`}>
+                Cancel
+            </Link>
+            <Link className="btn" to={`/agency/edit/${agency.spec_id}`}>
+                Edit
+            </Link>
         </main>
     );
 }

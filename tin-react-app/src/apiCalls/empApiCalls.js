@@ -1,5 +1,4 @@
-import {employeeDetailsList} from './empMockData'
-
+//import {employeeDetailsList} from './empMockData'
 const empBaseUrl = 'http://localhost:3000/api/emps'
 
 export function getEmployeesApiCall() {
