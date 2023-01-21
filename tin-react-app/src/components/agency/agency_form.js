@@ -3,6 +3,7 @@ import {Link, useNavigate, useParams} from 'react-router-dom'
 import formMode from "../../helpers/formHelpers";
 import {validateEmpFields} from "../../helpers/validateEmpFields";
 import {validateAgencyFields} from "../../helpers/validateAgencyFields";
+import Agency from "./agency";
 
 function AgencyForm() {
     let { spec_id } = useParams()
@@ -14,6 +15,7 @@ function AgencyForm() {
     let [sumErr, setSumerr] = useState('');
     let status;
     const nav = useNavigate();
+    let [navigate, setNav] = useState('');
 
     if(spec_id !== undefined){
         spec_id = parseInt(spec_id);
@@ -84,7 +86,11 @@ function AgencyForm() {
             }
             if (status === 200){
                 errorSumServer = res.json().then((val) => setSumerr(val));
-                nav("/agency");
+                if (page_name === "ADD"){
+                    setNav("add")
+                }else{
+                    setNav("edit")
+                }
             }
         }else{
 
@@ -112,6 +118,12 @@ function AgencyForm() {
             <main>
                 <h2>NO DATA FOR SUCH AN EMPLOYEE</h2>
             </main>)
+    }
+
+    if (navigate === 'add') {
+        return <Agency mode={'add'}/>
+    }else if (navigate === 'edit'){
+        return <Agency mode={'edit'}/>
     }
 
 

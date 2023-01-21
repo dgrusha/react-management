@@ -32,20 +32,22 @@ class Emp extends Component {
         super(props);
 
         this.state = {
-            error: null,
+            error: '',
             isLoaded:false,
             employees :[],
             showModal: false,
             reload: false,
             deleteStated: false,
             deleteId: 0,
-            mode: ''
+            mode: '',
+            modalText: '',
+            modalButtons:''
         }
         this.handleOpenModal = this.handleOpenModal.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.deleteRecord = this.deleteRecord.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
-        if(props.mode){
+        if(props.mode !== undefined){
             this.state.mode = props.mode
         }
     }
@@ -67,6 +69,16 @@ class Emp extends Component {
     }
 
     componentDidMount() {
+        if(this.props.mode !== undefined){
+            this.setState({ modalButtons: <><Link className="btn_modal" to="/emp">Close</Link> </> });
+            if(this.props.mode === 'edit'){
+                this.setState({ modalText: "Your record was modified" });
+            }else if(this.props.mode === 'add'){
+                this.setState({ modalText: "Your record was added" });
+            }
+            console.log(this.props.mode)
+            this.handleOpenModal()
+        }
         this.fetchAll();
     }
 
@@ -86,8 +98,8 @@ class Emp extends Component {
 
     render() {
 
-        const {error, isLoaded, employees,showModal,reload, deleteStated,deleteId, mode} = this.state
-        let content, modalBtn, text;
+        let {error, isLoaded, employees,showModal,reload, deleteStated,deleteId, mode, modalText, modalButtons} = this.state
+        let content;
         if(error){
             content = <p>HAHA 0!</p>
         }else{
@@ -95,27 +107,15 @@ class Emp extends Component {
         }
 
         if(deleteStated){
-            text = "Do you want to delete your record?"
-            modalBtn =<><button className="btn_modal" onClick={() => this.deleteRecord(deleteId)}>Accept</button>
+            modalText = "Do you want to delete your record?"
+            modalButtons =<><button className="btn_modal" onClick={() => this.deleteRecord(deleteId)}>Accept</button>
             <button className="btn_modal" onClick={this.handleCloseModal}>Close</button> </>
-        }else{
-            modalBtn =  <p>a</p>
         }
 
         if (reload){
             return <Emp/>
         }
 
-        if(mode !== ''){
-            modalBtn =<>
-                <Link className="btn_modal" to="/emp">Close</Link> </>
-            if(mode === 'edit'){
-                text = "Your record was modified"
-            }else{
-                text = "Your record was added"
-            }
-            this.handleOpenModal()
-        }
 
         return (
             <main>
@@ -134,10 +134,13 @@ class Emp extends Component {
                 >
 
                     <div className="modal-content">
-                        <div className="modal-text">{text}</div>
+                        <div className="modal-text">
+                            {modalText}
+
+                        </div>
                         <div className="modal-buttons">
 
-                            {modalBtn}
+                            {modalButtons}
 
                         </div>
                     </div>

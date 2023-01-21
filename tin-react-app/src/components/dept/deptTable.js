@@ -16,7 +16,22 @@ function DeptTable(props){
             </thead>
             <tbody>
             {depts.map(dept => (
-                <DeptTableRow deptData={dept} key={dept.name}/>
+                <tr key={dept.name}>
+                    <td title="Name:">
+                        {dept.name}
+                    </td>
+                    <td title="Email:">
+                        {dept.email}
+                    </td>
+                    <td className="list-actions-el">
+                        <ul className="list-actions">
+                            <li><Link className="btn2" to={`/dept/details/${dept.name}`}>Details</Link></li>
+                            <li><Link className="btn2" to={`/dept/edit/${dept.name}`}>Edit</Link></li>
+                            <li><button className="btn2" value={dept.name} onClick={() => props.handleDelete(dept.name)}>Delete</button></li>
+                        </ul>
+                    </td>
+                </tr>
+                //<DeptTableRow deptData={dept} key={dept.name}/>
             ))}
 
             </tbody>

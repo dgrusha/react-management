@@ -3,6 +3,7 @@ import {Link, useNavigate, useParams} from 'react-router-dom'
 import formMode from "../../helpers/formHelpers";
 import {validateDeptFields} from "../../helpers/validateDeptFields";
 import DeptTableRow from "./deptTableRow";
+import Dept from "./dept";
 
 function DeptForm() {
     let { deptId } = useParams();
@@ -11,6 +12,7 @@ function DeptForm() {
     let page_name = '';
     let [deptErrors, setEmpErrors] = useState({ name:"", email:"", adress:"", spec_id:"" });
     let [sumErr, setSumerr] = useState('');
+    let [navigate, setNav] = useState('');
     let status;
     const nav = useNavigate();
 
@@ -94,7 +96,11 @@ function DeptForm() {
             }
             if (status === 200){
                 errorSumServer = res.json().then((val) => setSumerr(val));
-                nav("/dept");
+                if (page_name === "ADD"){
+                    setNav("add")
+                }else{
+                    setNav("edit")
+                }
             }
         }else{
 
@@ -137,6 +143,12 @@ function DeptForm() {
             <main>
                 <h2>NO DATA FOR SUCH AN EMPLOYEE</h2>
             </main>)
+    }
+
+    if (navigate === 'add') {
+        return <Dept mode={'add'}/>
+    }else if (navigate === 'edit'){
+        return <Dept mode={'edit'}/>
     }
 
     return (

@@ -66,7 +66,7 @@ function DeptEmpDesc() {
                         </td>
                     </tr>
                     <tr>
-                        <Link className="btn" to={`/dept/edit/${item._id}`}>
+                        <Link className="btn" to={`/deptEmp/edit/${item._id}`}>
                             Edit
                         </Link>
                     </tr>

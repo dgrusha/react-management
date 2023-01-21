@@ -1,7 +1,11 @@
 import { Link } from 'react-router-dom'
 import {getAgencyApiCall} from "../../apiCalls/agencyApiCall";
 import {Component} from "react";
+import { Routes, Route, useNavigate} from 'react-router-dom';
+import ReactModal from "react-modal"
 import AgencyTable from "./agencyTable";
+
+ReactModal.setAppElement('#root');
 
 class Agency extends Component{
     fetchAll = () => {
@@ -28,56 +32,113 @@ class Agency extends Component{
         this.state = {
             error: null,
             isLoaded:false,
-            agencys :[]
+            agencys :[],
+            showModal: false,
+            reload: false,
+            deleteStated: false,
+            deleteId: 0,
+            mode: '',
+            modalText: '',
+            modalButtons:''
+        }
+        this.handleOpenModal = this.handleOpenModal.bind(this);
+        this.handleCloseModal = this.handleCloseModal.bind(this);
+        this.deleteRecord = this.deleteRecord.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
+        if(props.mode !== undefined){
+            this.state.mode = props.mode
         }
 
     }
 
+    handleDelete (value) {
+        this.setState({ deleteId: value });
+        this.setState({ deleteStated: true });
+        this.handleOpenModal ()
+    }
+
+    handleOpenModal () {
+        this.setState({ showModal: true });
+    }
+
+    handleCloseModal () {
+        this.setState({ deleteStated: false });
+        this.setState({ showModal: false });
+    }
+
     componentDidMount() {
+        if(this.props.mode !== undefined){
+            this.setState({ modalButtons: <><Link className="btn_modal" to="/agency">Close</Link> </> });
+            if(this.props.mode === 'edit'){
+                this.setState({ modalText: "Your record was modified" });
+            }else if(this.props.mode === 'add'){
+                this.setState({ modalText: "Your record was added" });
+            }
+            this.handleOpenModal()
+        }
         this.fetchAll();
     }
 
+    deleteRecord(deleteId){
+        let res = fetch('http://localhost:3000/api/agencys/' +deleteId, {
+            method: "DELETE",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "*"
+            }
+        })
+        this.setState({ showModal: false });
+        this.setState({ deleteStated: false });
+        this.setState({ reload: true });
+    }
+
     render() {
-        const {error, isLoaded, agencys} = this.state
+        let {error, isLoaded, agencys,showModal,reload, deleteStated,deleteId, mode, modalText, modalButtons} = this.state
         let content;
         if(error){
             content = <p>HAHA 0!</p>
         }else{
-            content =  <AgencyTable agencyList={agencys}/>
+            content =  <AgencyTable agencyList={agencys} modalWin={this.handleOpenModal} handleDelete={this.handleDelete}/>
+        }
+
+        if(deleteStated){
+            modalText = "Do you want to delete your record?"
+            modalButtons =<><button className="btn_modal" onClick={() => this.deleteRecord(deleteId)}>Accept</button>
+                <button className="btn_modal" onClick={this.handleCloseModal}>Close</button> </>
+        }
+
+        if (reload){
+            return <Agency/>
         }
         return (
             <main>
                 <h2>AGENCY</h2>
                 {content}
+                {reload}
 
                 <Link className="btn" to={`/agency/add`}>Add</Link>
-                <br/>
-                <div className="alert">
-                    <span className="closebtn" onClick="this.parentElement.style.display='none';">&times;</span>
-                    <strong>ALERT!</strong> YOUR RECORD WAS DELETED.
-                </div>
-                <br/>
-                <div className="alert">
-                    <strong>ALERT!</strong> DO YOU WANT TO DELETE THE RECORD?
-                    <div className="deletediv">
-                            <span className="deletebtn"
-                                  onClick="this.parentElement.parentElement.style.display='none';">Accept</span>
-                        <span className="deletebtn"
-                              onClick="this.parentElement.parentElement.style.display='none';">Cancel</span>
+                <ReactModal
+                    isOpen={this.state.showModal}
+                    contentLabel="Minimal Modal Example"
+                    portalClassName="modalCustom"
+                    className="Modal"
+                >
+
+                    <div className="modal-content">
+                        <div className="modal-text">
+                            {modalText}
+
+                        </div>
+                        <div className="modal-buttons">
+
+                            {modalButtons}
+
+                        </div>
                     </div>
-                </div>
-                <br/>
-                <div className="confirmation">
-                    <span className="closebtn" onClick="this.parentElement.style.display='none';">&times;</span>
-                    <strong>ALERT!</strong> YOUR RECORD WAS ADDED!
-                </div>
-                <br/>
-                <div className="modification">
-                                <span className="closebtn"
-                                      onClick="this.parentElement.style.display='none';">&times;</span>
-                    <strong>ALERT!</strong>YOUR RECORD WITH NAME : dsada and WITH ADRESS: jdsadsa WAS
-                    MODIFIED!
-                </div>
+
+
+                </ReactModal>
             </main>
         );
     }

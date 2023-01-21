@@ -32,7 +32,6 @@
     border: none;
     border-radius: 15px;
     box-shadow: 0 3px #999;
-    font-weight: bold;
 }
 
 .btn_modal{
@@ -48,7 +47,7 @@
     background-color: #ffffff;
     border: none;
     border-radius: 15px;
-    font-weight: bold;
+    font-weight: bold !important;
 }
 
 input[type=text],input[type=date],select {

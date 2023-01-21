@@ -4,6 +4,7 @@ import {getEmployeeByIdApiCall} from "../../apiCalls/empApiCalls";
 import {getEmployeesApiCall} from "../../apiCalls/empApiCalls";
 import {validateEmpFields} from "../../helpers/validateEmpFields";
 import formMode from "../../helpers/formHelpers";
+import DeptEmp from "./deptEmp";
 
 function DeptEmpForm() {
     let { deId1} = useParams();
@@ -15,6 +16,7 @@ function DeptEmpForm() {
     let page_name = '';
     let [deptEmpErrors, setDeptEmpErrors] = useState({ name:"", start_contract:"", end_contract:"", emp_id:"" });
     let [sumErr, setSumerr] = useState('');
+    let [navigate, setNav] = useState('');
     let status;
     const nav = useNavigate();
 
@@ -99,7 +101,11 @@ function DeptEmpForm() {
             }
             if (status === 200){
                 errorSumServer = res.json().then((val) => setSumerr(val));
-                nav("/deptEmp");
+                if (page_name === "ADD"){
+                    setNav("add")
+                }else{
+                    setNav("edit")
+                }
             }
         }else{
         }
@@ -153,8 +159,14 @@ function DeptEmpForm() {
     if (deptEmp.message) {
         return(
             <main>
-                <h2>NO DATA FOR SUCH AN EMPLOYEE</h2>
+                <h2>NO DATA FOR SUCH AN DEPT EMP</h2>
             </main>)
+    }
+
+    if (navigate === 'add') {
+        return <DeptEmp mode={'add'}/>
+    }else if (navigate === 'edit'){
+        return <DeptEmp mode={'edit'}/>
     }
 
     return (
@@ -168,8 +180,8 @@ function DeptEmpForm() {
                     <select onChange={handleChange} className="inputs" name="emp_id" id="emp_id">
                         {emp.map(e => (
                             e._id === deptEmp.emp_id ?
-                                <option value={e._id} selected>{e.fname} {e.lname}</option> :
-                                <option value={e._id} >{e.fname} {e.lname}</option>
+                                <option key={e._id} value={e._id} selected>{e.fname} {e.lname}</option> :
+                                <option key={e._id} value={e._id} >{e.fname} {e.lname}</option>
                         ))}
                     </select>
                     <span className="inputs err" id="errorD1">{deptEmpErrors["emp_id"]}</span>
@@ -207,8 +219,8 @@ function DeptEmpForm() {
                     <select onChange={handleChange} className="inputs" name="name" id="name">
                         {dept.map(d => (
                             d.name === deptEmp.name ?
-                                <option value={d.name} selected>{d.name}</option> :
-                                <option value={d.name} >{d.name}</option>
+                                <option key={d.name} value={d.name} selected>{d.name}</option> :
+                                <option key={d.name} value={d.name} >{d.name}</option>
                         ))}
                     </select>
                     <span className="inputs err" id="errorD2">{deptEmpErrors["name"]}</span>
