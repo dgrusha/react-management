@@ -31,7 +31,7 @@ function App() {
           <Routes>
               <Route path="/" element={<MainPage/>} />
               <Route path="emp">
-                  <Route index={true} element={<Emp />} />
+                  <Route index={true} element={<Emp/>} />
                   <Route path="/emp/details/:empId" element={<EmpDesc />} />
                   <Route path="add/" element={<EmpForm />} />
                   <Route path="edit/:empId" element={<EmpForm />} />

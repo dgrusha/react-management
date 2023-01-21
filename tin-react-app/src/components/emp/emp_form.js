@@ -15,6 +15,7 @@ function EmpForm() {
     let page_name = '';
     let [empErrors, setEmpErrors] = useState({ fname:"", lname:"", email:"", date_of_birth:"" });
     let [sumErr, setSumerr] = useState('');
+    let [navigate, setNav] = useState('');
     let status;
     const nav = useNavigate();
 
@@ -67,10 +68,8 @@ function EmpForm() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const sumErr2 = empErrors;
-        console.log(sumErr2);
         let valid = true;
         for (let k in sumErr2) {
-            console.log(k + ' is ' + sumErr2[k])
             if (sumErr2[k] !== ''){
                 setSumerr('YOUR FORM HAS ERRORS, FIX THEM FIRSTLY');
                 valid = false;
@@ -85,7 +84,12 @@ function EmpForm() {
             }
             if (status === 200){
                 errorSumServer = res.json().then((val) => setSumerr(val));
-                nav("/emp");
+                if (page_name === "ADD"){
+                    setNav("add")
+                }else{
+                    setNav("edit")
+                }
+
             }
         }else{
 
@@ -113,6 +117,12 @@ function EmpForm() {
             <main>
                 <h2>NO DATA FOR SUCH AN EMPLOYEE</h2>
             </main>)
+    }
+
+    if (navigate === 'add') {
+        return <Emp mode={'add'}/>
+    }else if (navigate === 'edit'){
+        return <Emp mode={'edit'}/>
     }
 
 

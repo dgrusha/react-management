@@ -3,6 +3,7 @@ import {getDeptEmpsApiCall} from "../../apiCalls/deptEmpApi";
 import {Component} from "react";
 import DeptEmpTable from "./deptEmpTable";
 
+
 class DeptEmp extends Component {
 
     fetchAll = () => {
@@ -29,7 +30,8 @@ class DeptEmp extends Component {
         this.state = {
             error: null,
             isLoaded:false,
-            deptEmps :[]
+            deptEmps :[],
+            showModal: false
         }
 
     }

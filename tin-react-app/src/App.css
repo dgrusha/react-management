@@ -24,6 +24,53 @@
   color: white;
 }
 
+.Modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  height: 20%;
+  width: 20%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  border-style: solid;
+  border-color: white;
+  background-color: #6099e4;
+}
+
+.modal-content {
+  color:white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 90%;
+  width: 100%;
+}
+
+.modal-text {
+  margin: auto;
+}
+
+.modal-buttons {
+  display: flex;
+  margin-top: auto;
+  justify-content: space-between;
+}
+
+@media all and (max-width:600px) {
+
+  .Modal {
+    position: relative;
+    top: 30%;
+    left: 30%;
+    height: 200px;
+    width: 200px;
+    background-color: papayawhip;
+  }
+}
+
 .App-link {
   color: #61dafb;
 }
