@@ -25,7 +25,7 @@ function DeptEmpDesc() {
     if (!deptEmp) return 'loading';
     let main = <>
         <main>
-            <h2>t('deptEmp.titles.desc')}</h2>
+            <h2>{t('deptEmp.titles.desc')}</h2>
             {deptEmp.map(item => (
                 <table className="table-list desc-table">
                     <tbody>

@@ -5,6 +5,7 @@ import DeptTable from "./deptTable";
 import { Routes, Route, useNavigate} from 'react-router-dom';
 import ReactModal from "react-modal"
 import { withTranslation } from 'react-i18next';
+import {getCurrentUser} from "../../helpers/authHelper";
 
 ReactModal.setAppElement('#root');
 
@@ -85,12 +86,18 @@ class Dept extends Component {
     }
 
     deleteRecord(deleteId){
+        const user = getCurrentUser()
+        let token
+        if (user && user.token) {
+            token = user.token
+        }
         let res = fetch('http://localhost:3000/api/depts/' +deleteId, {
             method: "DELETE",
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
-                "Access-Control-Allow-Origin": "*"
+                "Access-Control-Allow-Origin": "*",
+                'Authorization': 'Bearer ' + token
             }
         })
         this.setState({ showModal: false });

@@ -5,13 +5,16 @@ import {validateEmpFields} from "../../helpers/validateEmpFields";
 import {validateAgencyFields} from "../../helpers/validateAgencyFields";
 import Agency from "./agency";
 import { useTranslation } from 'react-i18next';
+import {validateDeptFields} from "../../helpers/validateDeptFields";
+import {type} from "@testing-library/user-event/dist/type";
+import {getCurrentUser} from "../../helpers/authHelper";
 
 function AgencyForm() {
     let { spec_id } = useParams()
 
 
     let [ag, setAg] = useState('');
-    let page_name = '';
+    let page_name,page_title, action = '';
     let [agErrors, setAgErrors] = useState({ phone:"", specialization:"", tax_number:"", date_of_creation:"" });
     let [sumErr, setSumerr] = useState('');
     let status;
@@ -21,8 +24,12 @@ function AgencyForm() {
     if(spec_id !== undefined){
         spec_id = parseInt(spec_id);
         page_name = formMode.EDIT;
+        page_title = t('agency.titles.edit');
+        action = t('agency.btns.edit');
     }else{
         page_name = formMode.NEW;
+        page_title = t('agency.titles.new');
+        action = t('agency.btns.new');
     }
 
     const handleChange = event => {
@@ -32,6 +39,9 @@ function AgencyForm() {
             [name]: value
         }));
         let errVal = validateAgencyFields(name,value);
+        if (errVal !== ''){
+            errVal =  t('errors.'+errVal)
+        }
         setAgErrors(prevState => ({
             ...prevState,
             [name]: errVal
@@ -39,15 +49,32 @@ function AgencyForm() {
     };
 
     const saveData = async () => {
+        const user = getCurrentUser()
+        let token
+        if (user && user.token) {
+            token = user.token
+        }
         let res;
         let operation;
-        let id;
+        let id, body;
         if (page_name === "ADD"){
-            operation = 'POST'
-            id = ''
+            operation = 'POST';
+            id = '';
+            body = JSON.stringify({
+                phone : ag.phone,
+                specialization: ag.specialization,
+                tax_number: ag.tax_number,
+                date_of_creation: ag.date_of_creation.substring(0, 10),
+            })
         }else{
             operation = 'PUT'
             id = spec_id;
+            body = JSON.stringify({
+                phone : ag.phone,
+                specialization: ag.specialization,
+                tax_number: ag.tax_number,
+                date_of_creation: ag.date_of_creation.substring(0, 10),
+            })
         }
         try{
             res = await fetch('http://localhost:3000/api/agencys/' + id, {
@@ -55,9 +82,10 @@ function AgencyForm() {
                 mode: 'cors',
                 headers: {
                     'Content-Type': 'application/json',
-                    "Access-Control-Allow-Origin": "*"
+                    "Access-Control-Allow-Origin": "*",
+                    'Authorization': 'Bearer ' + token
                 },
-                body: JSON.stringify(ag),
+                body: body,
             })
         } catch(e){
             console.error(`An error has occured while calling the API. ${e}`);
@@ -69,7 +97,6 @@ function AgencyForm() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const sumErr2 = agErrors;
-        console.log(sumErr2);
         let valid = true;
         for (let k in sumErr2) {
             console.log(k + ' is ' + sumErr2[k])
@@ -83,7 +110,8 @@ function AgencyForm() {
             status = res.status;
             let errorSumServer = '';
             if (status !== 200){
-                errorSumServer = res.json().then((val) => setSumerr(val));
+                console.log(res.json().then((val) => setSumerr(val.errors[0].message)))
+                errorSumServer = res.json().then((val) => setSumerr(val.errors[0].message));
             }
             if (status === 200){
                 errorSumServer = res.json().then((val) => setSumerr(val));
@@ -130,8 +158,8 @@ function AgencyForm() {
 
     return (
         <main>
-            <h2>NEW AGENCY</h2>
-            <form onSubmit={handleSubmit}>
+            <h2>{page_title}</h2>
+            <form onSubmit={handleSubmit} noValidate>
 
                 <div className="group-bl">
                     <label htmlFor="date_of_creation">{t('agency.fields.doc')}*:</label>
@@ -186,9 +214,9 @@ function AgencyForm() {
                 </div>
 
                 <div>
-                    <input className="btn" type="submit" value={page_name}/>
+                    <input className="btn" type="submit" value={action}/>
                     <Link className="btn" to="/agency">{t('agency.btns.cancel')}</Link>
-                    <p id="ErrSummary">{sumErr}</p>
+                    <p className="ErrSummary inputs err">{sumErr}</p>
                 </div>
             </form>
 

@@ -6,12 +6,14 @@ import DeptTableRow from "./deptTableRow";
 import Dept from "./dept";
 import { useTranslation } from 'react-i18next';
 import { withTranslation } from 'react-i18next';
+import {validateEmpFields} from "../../helpers/validateEmpFields";
+import {getCurrentUser} from "../../helpers/authHelper";
 
 function DeptForm() {
     let { deptId } = useParams();
     let [dept, setDept] = useState('');
     let [agency, setAgencys] = useState([]);
-    let page_name = '';
+    let page_name,page_title, action = '';
     let [deptErrors, setEmpErrors] = useState({ name:"", email:"", adress:"", spec_id:"" });
     let [sumErr, setSumerr] = useState('');
     let [navigate, setNav] = useState('');
@@ -20,8 +22,12 @@ function DeptForm() {
 
     if(deptId !== undefined){
         page_name = formMode.EDIT;
+        page_title = t('dept.titles.edit');
+        action = t('dept.btns.edit');
     }else{
         page_name = formMode.NEW;
+        page_title = t('dept.titles.new');
+        action = t('dept.btns.new');
     }
 
     const handleChange = event => {
@@ -32,6 +38,9 @@ function DeptForm() {
             [name]: value
         }));
         let errVal = validateDeptFields(name,value);
+        if (errVal !== ''){
+            errVal =  t('errors.'+errVal)
+        }
         setEmpErrors(prevState => ({
             ...prevState,
             [name]: errVal
@@ -39,6 +48,11 @@ function DeptForm() {
     };
 
     const saveData = async () => {
+        const user = getCurrentUser()
+        let token
+        if (user && user.token) {
+            token = user.token
+        }
         let res;
         let operation;
         let id;
@@ -68,7 +82,8 @@ function DeptForm() {
                 mode: 'cors',
                 headers: {
                     'Content-Type': 'application/json',
-                    "Access-Control-Allow-Origin": "*"
+                    "Access-Control-Allow-Origin": "*",
+                    'Authorization': 'Bearer ' + token
                 },
                 body: body,
             })
@@ -155,7 +170,7 @@ function DeptForm() {
 
     return (
         <main>
-            <h2>{page_name} DEPT</h2>
+            <h2>{page_title}</h2>
             <form onSubmit={handleSubmit}>
 
 
@@ -213,9 +228,9 @@ function DeptForm() {
                 </div>
 
                 <div>
-                    <input className="btn" type="submit" value={page_name}/>
+                    <input className="btn" type="submit" value={action}/>
                     <Link className="btn" to="/dept">CANCEL</Link>
-                    <p id="ErrSummary">{sumErr}</p>
+                    <p className="ErrSummary err">{sumErr}</p>
                 </div>
             </form>
 

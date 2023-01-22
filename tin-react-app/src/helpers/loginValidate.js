@@ -1,23 +1,20 @@
 import * as common from "./commonValidation";
+import {checkEmail, checkTextLengthRange} from "./commonValidation";
 
-
-export function validateDeptEmpFields(fieldName, fieldValue) {
+export function loginValidate(fieldName, fieldValue) {
     let error = ''
-    if (fieldName === "name"){
+    if (fieldName === "date_of_creation"){
         if(!common.checkRequired(fieldValue)) {
             error = "required";
         }
     }
-    if (fieldName === "emp_id"){
+
+    if (fieldName === "date_of_creation"){
         if(!common.checkRequired(fieldValue)) {
             error = "required";
         }
     }
-    if (fieldName === "start_contract"){
-        if(!common.checkDate(fieldValue)) {
-            error = "required";
-        }
-    }
+
 
     return error;
 }

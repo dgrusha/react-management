@@ -10,6 +10,13 @@ function Header() {
         i18n.changeLanguage(lng)
     }
 
+    const changeTheme = () => {
+        let currentTheme = document.documentElement.getAttribute("data-theme");
+        let switchToTheme = currentTheme === "dark" ? "light" : "dark"
+        document.documentElement.setAttribute("data-theme", switchToTheme);
+    }
+
+
     return (
         <header>
             <h2 id="nav-title"><Link to="/">MANAGEMENT SYS.</Link></h2>
@@ -21,8 +28,8 @@ function Header() {
                         <li className="item"><Link to="dept">{t('nav.departments')}</Link></li>
                         <li className="item"><Link to="deptEmp">{t('nav.emp-dept')}</Link></li>
                         <li className="item"><Link to="agency">{t('nav.agency')}</Link></li>
-                        <li className='item'><button onClick={() => handleLanguageChange('pl')}>PL</button></li>
-                        <li className="item"><button onClick={() => handleLanguageChange('en')}>EN</button></li>
+                        <li className="item"><Link to="login">Login</Link></li>
+                        <li className="item"><button className="btn" onClick={changeTheme}>ColorChange</button></li>
                     </ul>
                 </nav>
         </header>

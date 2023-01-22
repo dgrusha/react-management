@@ -4,6 +4,8 @@ import {validateEmpFields} from "../../helpers/validateEmpFields";
 import formMode from "../../helpers/formHelpers";
 import DeptEmp from "./deptEmp";
 import { useTranslation } from 'react-i18next';
+import {validateDeptEmpFields} from "../../helpers/validateDeptEmpFields";
+import {getCurrentUser} from "../../helpers/authHelper";
 
 function DeptEmpForm() {
     let { deId1} = useParams();
@@ -11,7 +13,7 @@ function DeptEmpForm() {
     let [dept, setDept] = useState([]);
     let [emp, setEmp] = useState([]);
 
-    let page_name = '';
+    let page_name,page_title, action = '';
     let [deptEmpErrors, setDeptEmpErrors] = useState({ name:"", start_contract:"", end_contract:"", emp_id:"" });
     let [sumErr, setSumerr] = useState('');
     let [navigate, setNav] = useState('');
@@ -20,8 +22,12 @@ function DeptEmpForm() {
 
     if(deId1 !== undefined){
         page_name = formMode.EDIT;
+        page_title = t('deptEmp.titles.edit');
+        action = t('deptEmp.btns.edit');
     }else{
         page_name = formMode.NEW;
+        page_title = t('deptEmp.titles.new');
+        action = t('deptEmp.btns.new');
     }
 
     const handleChange = event => {
@@ -33,8 +39,11 @@ function DeptEmpForm() {
             ...prevState,
             [name]: value
         }));
-        
-        let errVal = validateEmpFields(name,value);
+
+        let errVal = validateDeptEmpFields(name,value);
+        if (errVal !== ''){
+            errVal =  t('errors.'+errVal)
+        }
         setDeptEmpErrors(prevState => ({
             ...prevState,
             [name]: errVal
@@ -42,6 +51,11 @@ function DeptEmpForm() {
     };
 
     const saveData = async () => {
+        const user = getCurrentUser()
+        let token
+        if (user && user.token) {
+            token = user.token
+        }
         let res;
         let operation;
         let id;
@@ -69,13 +83,17 @@ function DeptEmpForm() {
                 mode: 'cors',
                 headers: {
                     'Content-Type': 'application/json',
-                    "Access-Control-Allow-Origin": "*"
+                    "Access-Control-Allow-Origin": "*",
+                    'Authorization': 'Bearer ' + token
                 },
                 body: body,
             })
+
         } catch(e){
+
             console.error(`An error has occured while calling the API. ${e}`);
         }
+
         return res
     }
 
@@ -169,7 +187,7 @@ function DeptEmpForm() {
 
     return (
         <main>
-            <h2>NEW DEPT</h2>
+            <h2>{page_title}</h2>
             <form onSubmit={handleSubmit}>
 
 
@@ -225,11 +243,11 @@ function DeptEmpForm() {
                 </div>
 
                 <div>
-                    <input className="btn" type="submit" value="ADD"/>
+                    <input className="btn" type="submit" value={action}/>
                         <Link className="btn" to={`/deptEmp/`}>
                             Cancel
                         </Link>
-                        <p id="ErrSummary"></p>
+                        <p className="ErrSummary err"></p>
                 </div>
             </form>
 

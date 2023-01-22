@@ -6,13 +6,14 @@ import { Routes, Route, useNavigate} from 'react-router-dom';
 import Emp from "./emp";
 import { useTranslation } from 'react-i18next';
 import { withTranslation } from 'react-i18next';
+import {getCurrentUser} from "../../helpers/authHelper";
 
 
 
 function EmpForm() {
     let { empId } = useParams();
     let [emp, setEmp] = useState('');
-    let page_name = '';
+    let page_name,page_title, action = '';
     let [empErrors, setEmpErrors] = useState({ fname:"", lname:"", email:"", date_of_birth:"" });
     let [sumErr, setSumerr] = useState('');
     let [navigate, setNav] = useState('');
@@ -22,8 +23,12 @@ function EmpForm() {
     if(empId !== undefined){
         empId = parseInt(empId)
         page_name = formMode.EDIT;
+        page_title = t('emp.titles.edit');
+        action = t('emp.btns.edit');
     }else{
         page_name = formMode.NEW;
+        page_title = t('emp.titles.new');
+        action = t('emp.btns.new');
     }
 
     const handleChange = event => {
@@ -33,6 +38,9 @@ function EmpForm() {
             [name]: value
         }));
         let errVal = validateEmpFields(name,value);
+        if (errVal !== ''){
+            errVal =  t('errors.'+errVal)
+        }
         setEmpErrors(prevState => ({
             ...prevState,
             [name]: errVal
@@ -40,6 +48,11 @@ function EmpForm() {
     };
 
     const saveData = async () => {
+        const user = getCurrentUser()
+        let token
+        if (user && user.token) {
+            token = user.token
+        }
         let res;
         let operation;
         let id;
@@ -55,6 +68,7 @@ function EmpForm() {
                 method: operation,
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
                 },
                 body: JSON.stringify(emp),
             })
@@ -128,7 +142,7 @@ function EmpForm() {
 
     return (
         <main>
-            <h2>{page_name} EMP</h2>
+            <h2>{page_title}</h2>
             <form onSubmit={handleSubmit}>
                 <div className="group-bl">
                     <label htmlFor="sur">{t('emp.fields.lastName')} *:</label>
@@ -186,7 +200,7 @@ function EmpForm() {
                 </div>
 
                 <div>
-                    <input className="btn" type="submit" value={page_name}/>
+                    <input className="btn" type="submit" value={action}/>
                         <Link className="btn" to="/emp">{t('emp.btns.cancel')}</Link>
                     <p id="ErrSummary">{sumErr}</p>
                 </div>
