@@ -1,17 +1,18 @@
 import React from "react";
-import DeptEmpTableRow from "./deptEmpTableRow";
 import {Link} from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 function DeptEmpTable(props){
+    const { t, i18n } = useTranslation();
     const deptEmps = props.deptEmpList;
     return (
         <table className="table-list">
             <thead>
             <tr>
-                <th>surname</th>
-                <th>name</th>
-                <th>name_dept</th>
-                <th>action</th>
+                <th>{t('deptEmp.fields.lastName')}</th>
+                <th>{t('deptEmp.fields.firstName')}</th>
+                <th>{t('deptEmp.fields.dept')}</th>
+                <th>{t('list.actions.title')}</th>
             </tr>
             </thead>
             <tbody>
@@ -28,9 +29,9 @@ function DeptEmpTable(props){
                     </td>
                     <td className="list-actions-el">
                         <ul className="list-actions">
-                            <li><Link className="btn2" to={`/deptEmp/details/${deptEmp.name}/${deptEmp.emp_id}`}>Details</Link></li>
-                            <li><Link className="btn2" to={`/deptEmp/edit/${deptEmp._id}`}>Edit</Link></li>
-                            <li><button className="btn2" value={deptEmp._id} onClick={() => props.handleDelete(deptEmp._id)}>Delete</button></li>
+                            <li><Link className="btn2" to={`/deptEmp/details/${deptEmp.name}/${deptEmp.emp_id}`}>{t('list.actions.details')}</Link></li>
+                            <li><Link className="btn2" to={`/deptEmp/edit/${deptEmp._id}`}>{t('list.actions.edit')}</Link></li>
+                            <li><button className="btn2" value={deptEmp._id} onClick={() => props.handleDelete(deptEmp._id)}>{t('list.actions.delete')}</button></li>
                         </ul>
                     </td>
                 </tr>

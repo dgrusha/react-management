@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
 import {getAgencyApiCall} from "../../apiCalls/agencyApiCall";
 import {Component} from "react";
-import { Routes, Route, useNavigate} from 'react-router-dom';
 import ReactModal from "react-modal"
 import AgencyTable from "./agencyTable";
+import { withTranslation } from 'react-i18next';
 
 ReactModal.setAppElement('#root');
 
@@ -94,6 +94,8 @@ class Agency extends Component{
     }
 
     render() {
+        const { t } = this.props;
+
         let {error, isLoaded, agencys,showModal,reload, deleteStated,deleteId, mode, modalText, modalButtons} = this.state
         let content;
         if(error){
@@ -109,15 +111,15 @@ class Agency extends Component{
         }
 
         if (reload){
-            return <Agency/>
+            return <Agency t={t}/>
         }
         return (
             <main>
-                <h2>AGENCY</h2>
+                <h2>{t('nav.agency')}</h2>
                 {content}
                 {reload}
 
-                <Link className="btn" to={`/agency/add`}>Add</Link>
+                <Link className="btn" to={`/agency/add`}>{t('list.actions.add')}</Link>
                 <ReactModal
                     isOpen={this.state.showModal}
                     contentLabel="Minimal Modal Example"
@@ -146,4 +148,4 @@ class Agency extends Component{
 
 }
 
-export default Agency;
+export default withTranslation()(Agency);

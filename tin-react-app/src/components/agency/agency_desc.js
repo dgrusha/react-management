@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react'
 import { Link, useParams } from 'react-router-dom'
-import {getEmployeeByIdApiCall} from "../../apiCalls/empApiCalls";
-import {getEmployeesApiCall} from "../../apiCalls/empApiCalls";
+import { useTranslation } from 'react-i18next';
 
 function AgencyDesc() {
     let { spec_id } = useParams()
     spec_id = parseInt(spec_id)
     let [agency, setAgency] = useState(null)
+    const { t, i18n } = useTranslation();
 
     useEffect(() => {
         const dataFetch = async () => {
@@ -26,26 +26,26 @@ function AgencyDesc() {
 
     return (
         <main>
-            <h2>AGENCY</h2>
+            <h2>{t('agency.titles.desc')}</h2>
             <table className="table-list desc-table">
                 <tbody>
                 <tr>
-                    <td title="Phone:">
+                    <td title={t('agency.fields.phone')}>
                         {agency.phone}
                     </td>
                 </tr>
                 <tr>
-                    <td title="TaxNumber:">
+                    <td title={t('agency.fields.tax')}>
                         {agency.tax_number}
                     </td>
                 </tr>
                 <tr>
-                    <td title="specialization:">
+                    <td title={t('agency.fields.spec')}>
                         {agency.specialization}
                     </td>
                 </tr>
                 <tr>
-                    <td title="Date created:">
+                    <td title={t('agency.fields.doc')}>
                         {agency.date_of_creation}
                     </td>
                 </tr>
@@ -59,21 +59,21 @@ function AgencyDesc() {
                     <table className="table-list table-dept">
                         <thead>
                         <tr>
-                            <th>name</th>
-                            <th>adress</th>
-                            <th>email</th>
+                            <th>{t('agency.fields.name')}</th>
+                            <th>{t('agency.fields.adress')}</th>
+                            <th>{t('agency.fields.email')}</th>
                         </tr>
                         </thead>
                         <tbody>
                         {agency.depts.map(dept => (
                             <tr>
-                                <td title="Name:">
+                                <td title={t('agency.fields.name')}>
                                     {dept.name}
                                 </td>
-                                <td title="Adress:">
+                                <td title={t('agency.fields.adress')}>
                                     {dept.adress}
                                 </td>
-                                <td title="Email:">
+                                <td title={t('agency.fields.email')}>
                                     {dept.email}
                                 </td>
                             </tr>

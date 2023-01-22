@@ -4,9 +4,10 @@ header{
     position: sticky;
     top: 0;
     width: 100%;
+    font-size: 15px !important;
   }
   
-  header a {
+  header a, button {
       color:white;
       font-weight: bold;
       text-decoration: none;
@@ -14,11 +15,28 @@ header{
       display: block;
       padding: 30px;
   }
+
+header button {
+    color:white;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease 0s;
+    height: 100%;
+    display: block;
+    background-color: transparent !important;
+    border: none !important;
+    margin-left: 10px;
+}
+
+.main-change{
+    display: flex;
+    text-decoration:none !important;
+}
   
   #nav-title{
     display: inline-block;
     color: white;
-    font-size: 17px;
+    font-size: 18px;
   }
   
   header ul{

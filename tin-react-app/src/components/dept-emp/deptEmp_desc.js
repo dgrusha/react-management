@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react'
 import { Link, useParams } from 'react-router-dom'
-import {getEmployeeByIdApiCall} from "../../apiCalls/empApiCalls";
-import {getEmployeesApiCall} from "../../apiCalls/empApiCalls";
+import { useTranslation } from 'react-i18next';
 
 function DeptEmpDesc() {
     let { deId1, deId2 } = useParams();
     let [deptEmp, setDeptEmp] = useState(null)
+    const { t, i18n } = useTranslation();
 
     useEffect(() => {
         const dataFetch = async () => {
@@ -25,32 +25,32 @@ function DeptEmpDesc() {
     if (!deptEmp) return 'loading';
     let main = <>
         <main>
-            <h2>DEPT-EMP DETAILS</h2>
+            <h2>t('deptEmp.titles.desc')}</h2>
             {deptEmp.map(item => (
                 <table className="table-list desc-table">
                     <tbody>
                     <tr>
-                        <td title="Name:">
+                        <td title={t('deptEmp.fields.firstName')}>
                             {item.emps.fname}
                         </td>
                     </tr>
                     <tr>
-                        <td title="Surname:">
+                        <td title={t('deptEmp.fields.lastName')}>
                             {item.emps.lname}
                         </td>
                     </tr>
                     <tr>
-                        <td title="Email:">
+                        <td title={t('deptEmp.fields.email')}>
                             {item.emps.email}
                         </td>
                     </tr>
                     <tr>
-                        <td title="Date start:">
+                        <td title={t('deptEmp.fields.dos')}>
                             {item.start_contract.substring(0, 10)}
                         </td>
                     </tr>
                     <tr>
-                        <td title="Date end:">
+                        <td title={t('deptEmp.fields.doe')}>
                             {item.end_contract ?
                                 (
                                     item.end_contract.substring(0, 10)
@@ -61,13 +61,13 @@ function DeptEmpDesc() {
                         </td>
                     </tr>
                     <tr>
-                        <td title="Name Dept:">
+                        <td title={t('deptEmp.fields.ndept')}>
                             {item.name}
                         </td>
                     </tr>
                     <tr>
                         <Link className="btn" to={`/deptEmp/edit/${item._id}`}>
-                            Edit
+                            {t('deptEmp.btns.edit')}
                         </Link>
                     </tr>
 
@@ -80,7 +80,7 @@ function DeptEmpDesc() {
             )}
 
             <Link className="btn" to={`/deptEmp/`}>
-                Cancel
+                {t('deptEmp.btns.cancel')}
             </Link>
         </main>
     </>;

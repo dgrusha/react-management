@@ -4,6 +4,8 @@ import {Component} from "react";
 import { Routes, Route, useNavigate} from 'react-router-dom';
 import EmpTable from "./empTable";
 import ReactModal from "react-modal"
+import { withTranslation } from 'react-i18next';
+
 
 ReactModal.setAppElement('#root');
 
@@ -31,6 +33,7 @@ class Emp extends Component {
     constructor(props) {
         super(props);
 
+
         this.state = {
             error: '',
             isLoaded:false,
@@ -56,7 +59,6 @@ class Emp extends Component {
         this.setState({ deleteId: value });
         this.setState({ deleteStated: true });
         this.handleOpenModal ()
-        console.log(value);
     }
 
     handleOpenModal () {
@@ -69,6 +71,7 @@ class Emp extends Component {
     }
 
     componentDidMount() {
+
         if(this.props.mode !== undefined){
             this.setState({ modalButtons: <><Link className="btn_modal" to="/emp">Close</Link> </> });
             if(this.props.mode === 'edit'){
@@ -97,6 +100,7 @@ class Emp extends Component {
     }
 
     render() {
+        const { t } = this.props;
 
         let {error, isLoaded, employees,showModal,reload, deleteStated,deleteId, mode, modalText, modalButtons} = this.state
         let content;
@@ -113,18 +117,18 @@ class Emp extends Component {
         }
 
         if (reload){
-            return <Emp/>
+            return <Emp t={t}/>
         }
 
 
         return (
             <main>
-                <h2>EMP</h2>
+                <h2>{t('nav.employees')}</h2>
                 {content}
                 {reload}
 
                 <Link className="btn" to={`/emp/add`}>
-                    Add
+                    {t('list.actions.add')}
                 </Link>
                 <ReactModal
                     isOpen={this.state.showModal}
@@ -154,4 +158,4 @@ class Emp extends Component {
 
 
 }
-export default Emp;
+export default withTranslation()(Emp);

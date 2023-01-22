@@ -4,6 +4,8 @@ import formMode from "../../helpers/formHelpers";
 import {validateDeptFields} from "../../helpers/validateDeptFields";
 import DeptTableRow from "./deptTableRow";
 import Dept from "./dept";
+import { useTranslation } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 function DeptForm() {
     let { deptId } = useParams();
@@ -14,7 +16,7 @@ function DeptForm() {
     let [sumErr, setSumerr] = useState('');
     let [navigate, setNav] = useState('');
     let status;
-    const nav = useNavigate();
+    const { t, i18n } = useTranslation();
 
     if(deptId !== undefined){
         page_name = formMode.EDIT;
@@ -158,7 +160,7 @@ function DeptForm() {
 
 
                 <div className="group-bl">
-                    <label htmlFor="name">Name *:</label>
+                    <label htmlFor="name">{t('dept.fields.name')} *:</label>
                     {page_name === 'EDIT' ?
                         (
                             <input onChange={handleChange} className="inputs" type="text" name="name" id="name" value={dept.name} disabled>
@@ -173,7 +175,7 @@ function DeptForm() {
                 </div>
 
                 <div className="group-bl">
-                    <label htmlFor="email">Email *:</label>
+                    <label htmlFor="email">{t('dept.fields.email')} *:</label>
                     {dept?
                         (
                             <input onChange={handleChange} className="inputs" type="text" name="email" id="email" value={dept.email} required>
@@ -187,7 +189,7 @@ function DeptForm() {
 
 
                 <div className="group-bl">
-                    <label htmlFor="adress">Adress *:</label>
+                    <label htmlFor="adress">{t('dept.fields.adress')} *:</label>
                     {dept?
                         (
                             <input onChange={handleChange} className="inputs" type="text" name="adress" id="adress" value={dept.adress} required>
@@ -200,7 +202,7 @@ function DeptForm() {
                 </div>
 
                 <div className="group-bl">
-                    <label htmlFor="ags">Agency*:</label>
+                    <label htmlFor="ags">{t('dept.fields.agency')}*:</label>
                     <select onChange={handleChange} className="inputs" name="spec_id" id="spec_id">
                         {agency.map(ag => (
                             ag.spec_id === dept.spec_id ?

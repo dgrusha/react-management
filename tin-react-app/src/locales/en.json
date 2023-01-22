@@ -1,0 +1,151 @@
+{
+	"main-page": {
+		"content": "Main Page"
+	},
+    "login": {
+		"content": "You are logged in as:",
+        "name" : "Name:",
+        "pass": "Password:"
+	},
+	"nav": {
+		"emp-dept": "Emp-Dept",
+		"employees": "Employees",
+		"departments": "Depts",
+		"agency": "Agency"
+	},
+    "list": {
+       "actions": {
+         "title": "Actions",
+         "details": "Details",
+         "edit": "Edit",
+         "delete": "Delete",
+         "add" : "Add"
+       }
+    },
+    "popup": {
+        "alert" : "ALERT!",
+        "added": {
+          "text": "RECORD WAS ADDED!"
+        },
+        "deleted": {
+          "text": "DO YOU WANT TO DELETE THE RECORD?",
+          "accept": "Accept",
+          "cancel": "Cancel",
+          "result" : "RECORD WAS DELETED"
+        },
+        "edited": {
+            "text": "RECORD WAS CHANGED!"
+        }
+     },
+    "table": {
+          "name": "Name",
+          "name_dept": "Name Dept",
+          "surname": "Surname",
+          "action": "Action",
+          "email": "Email",
+          "phone": "Phone",
+          "spec": "Specialization"
+     },
+    "form": {
+       "actions": {
+          "return": "Return",
+          "edit": "Edit",
+          "cancel": "Cancel"
+      }
+    },
+	"emp": {
+        "titles":{
+          "new": "New emp",
+          "edit": "Edit emp",
+          "desc": "Description emp"
+        },
+        "btns":{
+          "new": "Add",
+          "edit": "Edit",
+          "cancel": "Cancel"
+        },
+		"fields": {
+			"firstName": "Name",
+			"lastName": "Surname",
+			"email": "Email", 
+            "dob" : "Date of birth",
+            "ds" : "Date start",
+            "de": "Date end",
+            "dept" : "Department"
+		}
+    },
+	"dept": {
+        "titles":{
+          "new": "New dept",
+          "edit": "Edit dept",
+          "desc": "Description dept"
+        },
+        "btns":{
+          "new": "Add",
+          "edit": "Edit",
+          "cancel": "Cancel"
+        },
+		"fields": {
+			"name": "Name",
+			"adress": "Adress",
+			"email": "Email", 
+            "agency" : "Agency",
+            "agp" : "Agency phone"
+		}
+    },
+	"agency": {
+        "titles":{
+          "new": "New Agency",
+          "edit": "Change Agency",
+          "desc": "Description Agency"
+        },
+        "btns":{
+          "new": "Add",
+          "edit": "Edit",
+          "cancel": "Cancel"
+        },
+		"fields": {
+			"phone": "Phone",
+			"tax": "Tax number",
+			"spec": "Specialization", 
+            "doc" : "Date created",
+            "name" : "Name",
+            "adress" : "Adress",
+            "email" : "Email"
+		}
+    },
+	"deptEmp": {
+        "titles":{
+          "new": "New Dept-Emp",
+          "edit": "Change Dept-Emp",
+          "desc": "Description Dept-Emp"
+        },
+        "btns":{
+          "new": "Add",
+          "edit": "Edit",
+          "cancel": "Cancel"
+        },
+		"fields": {
+			"dept": "Name dept",
+            "dos" : "Date start",
+            "doe" : "Date end",
+            "firstName": "Name",
+			"lastName": "Surname",
+            "email" : "Email",
+            "nemp" : "Name of emp",
+            "ndept" : "Name of dept"
+		}
+    },
+    "errors": {
+        "errSum": "Form contains errors!",
+        "required" : "The field is required.",
+        "contain2-60" : "Should contain 2 to 60 characters.",
+        "contain5-60" : "Should contain 5 to 60 characters.",
+        "email" : "Should be valid email adress format.",
+        "phone" : "Wrong format of phone.",
+        "numbers"  : "Should be only numbers.",
+        "select" : "Select should have chosen option.",
+        "date1" : "Should be less than date2.",
+        "date2" : "Should be bigger than date1."
+    }
+}

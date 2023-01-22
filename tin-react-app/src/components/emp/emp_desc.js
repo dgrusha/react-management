@@ -3,10 +3,12 @@ import { Link, useParams } from 'react-router-dom'
 import {getEmployeeByIdApiCall} from "../../apiCalls/empApiCalls";
 import {getEmployeesApiCall} from "../../apiCalls/empApiCalls";
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const EmpDesc = ()  => {
     let { empId } = useParams();
     let [emp, setEmp] = useState(null)
+    const { t, i18n } = useTranslation();
 
     useEffect(() => {
         const dataFetch = async () => {
@@ -27,26 +29,26 @@ export const EmpDesc = ()  => {
     return (
         <>
         <main>
-            <h2>EMP DESC</h2>
+            <h2>{t('emp.titles.desc')}</h2>
             <table className="table-list desc-table">
                 <tbody>
                 <tr>
-                    <td title="Name:">
+                    <td title={t('emp.fields.firstName')}>
                         {emp.fname}
                     </td>
                 </tr>
                 <tr>
-                    <td title="SurName:">
+                    <td title={t('emp.fields.lastName')}>
                         {emp.lname}
                     </td>
                 </tr>
                 <tr>
-                    <td title="Email:">
+                    <td title={t('emp.fields.email')}>
                         {emp.email}
                     </td>
                 </tr>
                 <tr>
-                    <td title="Date of birth:">
+                    <td title={t('emp.fields.dob')}>
                         {emp.date_of_birth}
                     </td>
                 </tr>
@@ -56,18 +58,18 @@ export const EmpDesc = ()  => {
             </table>
 
             <Link className="btn" to={`/emp/`}>
-                Cancel
+                {t('emp.btns.cancel')}
             </Link>
             <Link className="btn" to={`/emp/edit/${emp._id}`}>
-                Edit
+                {t('emp.btns.edit')}
             </Link>
 
             <table className="table-list many-table">
                 <thead>
                 <tr>
-                    <th>Date start</th>
-                    <th>Date end</th>
-                    <th>dept</th>
+                    <th>{t('emp.fields.ds')}</th>
+                    <th>{t('emp.fields.de')}</th>
+                    <th>{t('emp.fields.dept')}</th>
                 </tr>
                 </thead>
                 <tbody>

@@ -4,8 +4,8 @@ import formMode from "../../helpers/formHelpers"
 import {validateEmpFields} from "../../helpers/validateEmpFields";
 import { Routes, Route, useNavigate} from 'react-router-dom';
 import Emp from "./emp";
-import {getEmployeeByIdApiCall} from "../../apiCalls/empApiCalls";
-import {getEmployeesApiCall} from "../../apiCalls/empApiCalls";
+import { useTranslation } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 
 
@@ -17,7 +17,7 @@ function EmpForm() {
     let [sumErr, setSumerr] = useState('');
     let [navigate, setNav] = useState('');
     let status;
-    const nav = useNavigate();
+    const { t, i18n } = useTranslation();
 
     if(empId !== undefined){
         empId = parseInt(empId)
@@ -131,7 +131,7 @@ function EmpForm() {
             <h2>{page_name} EMP</h2>
             <form onSubmit={handleSubmit}>
                 <div className="group-bl">
-                    <label htmlFor="sur">Surname *:</label>
+                    <label htmlFor="sur">{t('emp.fields.lastName')} *:</label>
                     {emp?
                         (
                             <input onChange={handleChange} className="inputs" type="text" name="lname" id="sur" value={emp.lname} required>
@@ -147,7 +147,7 @@ function EmpForm() {
 
 
                 <div className="group-bl">
-                    <label htmlFor="name">Name *:</label>
+                    <label htmlFor="name">{t('emp.fields.firstName')} *:</label>
                     {emp?
                         (
                             <input onChange={handleChange} className="inputs" type="text" name="fname" id="name" value={emp.fname} required>
@@ -160,7 +160,7 @@ function EmpForm() {
                 </div>
 
                 <div className="group-bl">
-                    <label htmlFor="email">Email *:</label>
+                    <label htmlFor="email">{t('emp.fields.email')} *:</label>
                     {emp?
                         (
                             <input onChange={handleChange} className="inputs" type="text" name="email" id="email" value={emp.email} required>
@@ -173,7 +173,7 @@ function EmpForm() {
                 </div>
 
                 <div className="group-bl">
-                    <label htmlFor="birthday">Birthday*:</label>
+                    <label htmlFor="birthday">{t('emp.fields.dob')}*:</label>
                     {emp.date_of_birth?
                         (
                             <input onChange={handleChange} className="inputs" type="date" id="date_of_birth" name="date_of_birth" value={emp.date_of_birth.substring(0, 10)} required>
@@ -187,7 +187,7 @@ function EmpForm() {
 
                 <div>
                     <input className="btn" type="submit" value={page_name}/>
-                        <Link className="btn" to="/emp">CANCEL</Link>
+                        <Link className="btn" to="/emp">{t('emp.btns.cancel')}</Link>
                     <p id="ErrSummary">{sumErr}</p>
                 </div>
             </form>

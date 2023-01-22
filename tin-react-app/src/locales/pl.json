@@ -1,0 +1,151 @@
+{
+	"main-page": {
+		"content": "Strona główna"
+	},
+	"login": {
+		"content": "Jesteś zalogowany jako: ",
+		"name": "Imię ",
+		"pass": "Hasło"
+	},
+	"nav": {
+		"employees": "Pracownicy",
+		"departments": "Depart",
+		"emp-dept": "PracDepart",
+		"agency": "Agencja"
+	},
+	"list": {
+		"actions": {
+			"title": "Akcje",
+			"details": "Szczegóły",
+			"edit": "Edytuj",
+			"delete": "Usuń",
+			"add": "Dodać"
+		}
+	},
+	"popup": {
+		"alert": "UWAGA!",
+		"added": {
+			"text": "ZAPIS BYŁ DODANY!"
+		},
+		"deleted": {
+			"text": "CHCESZ WYRUCIĆ ZAPIS?",
+			"accept": "Zaakceptować",
+			"cancel": "Anulować",
+			"result": "ZAPIS BYŁ WYRZUCONY"
+		},
+		"edited": {
+			"text": "ZAPIS BYŁ ZMIENIONY!"
+		}
+	},
+	"table": {
+		"name": "Imię",
+		"name_dept": "Nazwa depart",
+		"surname": "Nazwisko",
+		"action": "Działanie",
+		"email": "Email",
+		"phone": "Telefon",
+		"spec": "Specializacja"
+	},
+	"form": {
+		"actions": {
+			"return": "Powrót",
+			"edit": "Edytuj",
+			"cancel": "Anuluj"
+		}
+	},
+	"emp": {
+		"titles":{
+			"new": "Nowy pracownik",
+			"edit": "Zmienić pracownika",
+			"desc": "Opis pracownika"
+		},
+		"btns":{
+			"new": "Dodać",
+			"edit": "Zmienić",
+            "cancel": "Anuluj"
+		},
+		"fields": {
+			"firstName": "Imię",
+			"lastName": "Nazwisko",
+			"email": "Email",
+			"dob": "Data urodzenia",
+            "ds" : "Data początku",
+            "de": "Data końca",
+            "dept" : "Departament"
+		}
+	},
+	"dept": {
+        "titles":{
+          "new": "Nowy Departament",
+          "edit": "Zmienić Departament",
+          "desc": "Opis Departamentu"
+        },
+		"btns":{
+			"new": "Dodać",
+			"edit": "Zmienić",
+            "cancel": "Anuluj"
+		},
+		"fields": {
+			"name": "Imię",
+			"adress": "Adresa",
+			"email": "Email", 
+            "agency" : "Agencja",
+            "agp" : "Telefon agencji"
+		}
+    },
+	"agency": {
+        "titles":{
+          "new": "Nowa Agencja",
+          "edit": "Zmienić Agencję",
+          "desc": "Opis Agencji"
+        },
+		"btns":{
+			"new": "Dodać",
+			"edit": "Zmienić",
+            "cancel": "Anuluj"
+		},
+		"fields": {
+			"phone": "Telefon",
+			"tax": "Numer podatkowy",
+			"spec": "Specializacja", 
+            "doc" : "Data stworzenia",
+            "name" : "Imię",
+            "adress" : "Adresa",
+            "email" : "Email"
+		}
+    },
+	"deptEmp": {
+        "titles":{
+          "new": "Nowy Prac-Depart",
+          "edit": "Zmienić Prac-Depart",
+          "desc": "Opis Prac-Depart"
+        },
+		"btns":{
+			"new": "Dodać",
+			"edit": "Zmienić",
+            "cancel": "Anuluj"
+		},
+		"fields": {
+			"dept": "Nazwa depart",
+            "dos" : "Data początku",
+            "doe" : "Data końca",
+            "firstName": "Imię",
+			"lastName": "Nazwisko",
+            "email" : "Email",
+			"nemp" : "Imię pracownika",
+			"ndept" : "Nazwa depart"
+		}
+    },
+    "errors": {
+		"errSum": "Forma ma błędy!",
+        "required" : "Pole jest obowiązkowe.",
+        "contain2-60" : "Powinno być od 2 do 60 znaków.",
+        "contain5-60" : "Powinno być od 5 do 60 znaków.",
+        "email" : "Nie prawidłowy format mailu.",
+		"phone" : "Nie poprawny format telefonu.",
+		"numbers"  : "Tylko liczby.",
+        "select" : "Powinna być wybrana 1 opcja.",
+        "date1" : "Powinno być więcej od date2.",
+        "date2" : "Powinno być mniej od date1."
+    }
+}

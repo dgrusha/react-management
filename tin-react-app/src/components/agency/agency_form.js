@@ -4,6 +4,7 @@ import formMode from "../../helpers/formHelpers";
 import {validateEmpFields} from "../../helpers/validateEmpFields";
 import {validateAgencyFields} from "../../helpers/validateAgencyFields";
 import Agency from "./agency";
+import { useTranslation } from 'react-i18next';
 
 function AgencyForm() {
     let { spec_id } = useParams()
@@ -14,8 +15,8 @@ function AgencyForm() {
     let [agErrors, setAgErrors] = useState({ phone:"", specialization:"", tax_number:"", date_of_creation:"" });
     let [sumErr, setSumerr] = useState('');
     let status;
-    const nav = useNavigate();
     let [navigate, setNav] = useState('');
+    const { t, i18n } = useTranslation();
 
     if(spec_id !== undefined){
         spec_id = parseInt(spec_id);
@@ -133,7 +134,7 @@ function AgencyForm() {
             <form onSubmit={handleSubmit}>
 
                 <div className="group-bl">
-                    <label htmlFor="date_of_creation">Date of creation*:</label>
+                    <label htmlFor="date_of_creation">{t('agency.fields.doc')}*:</label>
                     {ag.date_of_creation?
                         (
                             <input onChange={handleChange} className="inputs" type="date" id="date_of_birth" name="date_of_birth" value={ag.date_of_creation.substring(0, 10)} required>
@@ -146,7 +147,7 @@ function AgencyForm() {
                 </div>
 
                 <div className="group-bl">
-                    <label htmlFor="phone">Phone *:</label>
+                    <label htmlFor="phone">{t('agency.fields.phone')} *:</label>
                     {ag?
                         (
                             <input onChange={handleChange} className="inputs" type="text" name="phone" id="phone" value={ag.phone} required>
@@ -159,7 +160,7 @@ function AgencyForm() {
                 </div>
 
                 <div className="group-bl">
-                    <label htmlFor="specialization">Specialization *:</label>
+                    <label htmlFor="specialization">{t('agency.fields.spec')} *:</label>
                     {ag?
                         (
                             <input onChange={handleChange} className="inputs" type="text" name="specialization" id="specialization" value={ag.specialization} required>
@@ -172,7 +173,7 @@ function AgencyForm() {
                 </div>
 
                 <div className="group-bl">
-                    <label htmlFor="tax_number">Tax number *:</label>
+                    <label htmlFor="tax_number">{t('agency.fields.tax')} *:</label>
                     {ag?
                         (
                             <input onChange={handleChange} className="inputs" type="text" name="tax_number" id="tax_number" value={ag.tax_number} required>
@@ -186,7 +187,7 @@ function AgencyForm() {
 
                 <div>
                     <input className="btn" type="submit" value={page_name}/>
-                    <Link className="btn" to="/agency">CANCEL</Link>
+                    <Link className="btn" to="/agency">{t('agency.btns.cancel')}</Link>
                     <p id="ErrSummary">{sumErr}</p>
                 </div>
             </form>

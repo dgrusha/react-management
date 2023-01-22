@@ -1,10 +1,12 @@
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 function DeptDesc() {
     let { deptId } = useParams();
-    let [dept, setDept] = useState(null)
+    let [dept, setDept] = useState(null);
+    const { t, i18n } = useTranslation();
 
     useEffect(() => {
         const dataFetch = async () => {
@@ -24,22 +26,32 @@ function DeptDesc() {
 
     return (
         <main>
-            <h2>DEPT DESC</h2>
+            <h2>{t('dept.titles.desc')}</h2>
             <table className="table-list desc-table">
                 <tbody>
                 <tr>
-                    <td title="Name:">
+                    <td title={t('dept.fields.name')}>
                         {dept.name}
                     </td>
                 </tr>
                 <tr>
-                    <td title="Adress:">
+                    <td title={t('dept.fields.adress')}>
                         {dept.adress}
                     </td>
                 </tr>
                 <tr>
-                    <td title="Email:">
+                    <td title={t('dept.fields.email')}>
                         {dept.email}
+                    </td>
+                </tr>
+                <tr>
+                    <td title={t('dept.fields.agency')}>
+                        {dept.agencys.specialization}
+                    </td>
+                </tr>
+                <tr>
+                    <td title={t('dept.fields.agp')}>
+                        {dept.agencys.phone}
                     </td>
                 </tr>
 
@@ -48,10 +60,10 @@ function DeptDesc() {
             </table>
 
             <Link className="btn" to={`/dept/`}>
-                Cancel
+                {t('dept.btns.cancel')}
             </Link>
             <Link className="btn" to={`/dept/edit/${dept.name}`}>
-                Edit
+                {t('dept.btns.edit')}
             </Link>
 
         </main>

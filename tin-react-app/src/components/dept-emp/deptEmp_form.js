@@ -1,14 +1,12 @@
 import React, {useEffect, useState} from 'react'
 import {Link, useNavigate, useParams} from 'react-router-dom'
-import {getEmployeeByIdApiCall} from "../../apiCalls/empApiCalls";
-import {getEmployeesApiCall} from "../../apiCalls/empApiCalls";
 import {validateEmpFields} from "../../helpers/validateEmpFields";
 import formMode from "../../helpers/formHelpers";
 import DeptEmp from "./deptEmp";
+import { useTranslation } from 'react-i18next';
 
 function DeptEmpForm() {
     let { deId1} = useParams();
-    //console.log(deId1 +"/"+ deId2)
     let [deptEmp, setDeptEmp] = useState('')
     let [dept, setDept] = useState([]);
     let [emp, setEmp] = useState([]);
@@ -18,7 +16,7 @@ function DeptEmpForm() {
     let [sumErr, setSumerr] = useState('');
     let [navigate, setNav] = useState('');
     let status;
-    const nav = useNavigate();
+    const { t, i18n } = useTranslation();
 
     if(deId1 !== undefined){
         page_name = formMode.EDIT;
@@ -176,7 +174,7 @@ function DeptEmpForm() {
 
 
                 <div className="group-bl">
-                    <label htmlFor="emp_id">Name EMP*:</label>
+                    <label htmlFor="emp_id">{t('deptEmp.fields.nemp')}  *:</label>
                     <select onChange={handleChange} className="inputs" name="emp_id" id="emp_id">
                         {emp.map(e => (
                             e._id === deptEmp.emp_id ?
@@ -188,7 +186,7 @@ function DeptEmpForm() {
                 </div>
 
                 <div className="group-bl">
-                    <label htmlFor="start_contract">start contract*:</label>
+                    <label htmlFor="start_contract">{t('deptEmp.fields.dos')}*:</label>
                     {deptEmp.start_contract?
                         (
                             <input onChange={handleChange} className="inputs" type="date" id="start_contract" name="start_contract" value={deptEmp.start_contract.substring(0, 10)} required>
@@ -201,7 +199,7 @@ function DeptEmpForm() {
                 </div>
 
                 <div className="group-bl">
-                    <label htmlFor="end_contract">end contract *:</label>
+                    <label htmlFor="end_contract">{t('deptEmp.fields.doe')} *:</label>
                     {deptEmp.end_contract?
                         (
                             <input onChange={handleChange} className="inputs" type="date" id="end_contract" name="end_contract" value={deptEmp.end_contract.substring(0, 10)} required>
@@ -215,7 +213,7 @@ function DeptEmpForm() {
 
 
                 <div className="group-bl">
-                    <label htmlFor="name">Name dept*:</label>
+                    <label htmlFor="name">{t('deptEmp.fields.dept')}*:</label>
                     <select onChange={handleChange} className="inputs" name="name" id="name">
                         {dept.map(d => (
                             d.name === deptEmp.name ?

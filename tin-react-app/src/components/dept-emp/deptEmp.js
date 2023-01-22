@@ -4,6 +4,7 @@ import {Component} from "react";
 import DeptEmpTable from "./deptEmpTable";
 import ReactModal from "react-modal"
 import { Routes, Route, useNavigate} from 'react-router-dom';
+import { withTranslation } from 'react-i18next';
 
 ReactModal.setAppElement('#root');
 
@@ -94,6 +95,7 @@ class DeptEmp extends Component {
     }
 
     render() {
+        const { t } = this.props;
         let {error, isLoaded, deptEmps,showModal,reload, deleteStated,deleteId, mode, modalText, modalButtons} = this.state
         let content;
         if(error){
@@ -114,9 +116,9 @@ class DeptEmp extends Component {
 
         return (
             <main>
-                <h2>DEPT-EMP</h2>
+                <h2>{t('nav.emp-dept')}</h2>
                 {content}
-                <Link className="btn" to={`/deptEmp/add`}>Add</Link>
+                <Link className="btn" to={`/deptEmp/add`}>{t('list.actions.add')}</Link>
                 <ReactModal
                     isOpen={this.state.showModal}
                     contentLabel="Minimal Modal Example"
@@ -145,4 +147,4 @@ class DeptEmp extends Component {
 
 }
 
-export default DeptEmp;
+export default withTranslation()(DeptEmp);
