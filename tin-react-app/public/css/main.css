@@ -7,12 +7,24 @@
 
 :root {
     --background-color: rgb(191, 196, 214);
+    --background-color-header: #4841B7;
     --text-color: #000;
+    --black-trans: rgb(0,0,0);
+    --white-trans:  #ffffff;
+    --btn-main: #4841B7;
+    --even-t: #4841B7;
+    --odd-t: rgb(94, 95, 143);
 }
 
 [data-theme="dark"] {
-    --background-color: #3F3F3F;
+    --background-color: #91ca96;
+    --background-color-header: #0a0404;
     --text-color: #fff;
+    --black-trans: #ffffff;
+    --white-trans:  rgb(0,0,0);
+    --btn-main:#007d0c;
+    --even-t: #566454;
+    --odd-t: rgb(0, 98, 27);
 }
 
 body {
@@ -38,7 +50,7 @@ footer {
   bottom: 0;
   width: 100%;
   height: 2rem;
-  background-color: #4841B7;
+  background-color: var(--background-color-header);
   font-weight: bold;
   color : white;    
   padding: 1px;

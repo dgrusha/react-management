@@ -1,5 +1,5 @@
 header{
-    background-color: #4841B7;
+    background-color: var(--background-color-header);
     box-shadow: 1px 1px 5px 0px white;
     position: sticky;
     top: 0;
@@ -44,7 +44,7 @@ header button {
   }
   
   header a:hover {
-      color: #6099e4;
+      color: var(--background-color);
   }
   
   header a:active{
@@ -54,7 +54,7 @@ header button {
     width: 100%;
     height: 100%;
     position: fixed;
-    background-color: #4841B7;
+    background-color: var(--background-color-header);
     overflow: hidden;
     max-height: 0;
     transition: max-height .5s ease-out;

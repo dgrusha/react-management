@@ -9,7 +9,7 @@
     text-decoration: none;
     outline: none;
     color: #fff;
-    background-color: #4841B7;
+    background-color: var(--btn-main);;
     border: none;
     border-radius: 15px;
     box-shadow: 0 3px #999;
@@ -27,8 +27,8 @@
     text-align: center;
     text-decoration: none !important;
     outline: none;
-    color: rgb(0, 0, 0);
-    background-color: #ffffff;
+    color: var(--black-trans);
+    background-color: var(--white-trans);
     border: none;
     border-radius: 15px;
     box-shadow: 0 3px #999;

@@ -28,11 +28,11 @@
 
 .table-list th,
 .table-list tbody tr:nth-child(even){
-    background-color: #4841B7;
+    background-color: var(--even-t);;
     color:#fff;
 }
 .table-list tbody tr:nth-child(odd){
-    background-color: rgb(94, 95, 143);
+    background-color: var(--odd-t);
     color:#fff;
 }
 
