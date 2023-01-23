@@ -118,7 +118,7 @@ class DeptEmp extends Component {
         }
 
         if (reload){
-            return <DeptEmp/>
+            return <DeptEmp t={t}/>
         }
 
         return (
